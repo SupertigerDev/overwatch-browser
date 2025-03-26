@@ -1,63 +1,77 @@
-import { Role } from "./Roles";
+import { RoleName } from "./Roles";
 
 export interface Hero {
+    id: string;
     name: string;
-    role: Role
+    role: RoleName
 }
 export const Heroes: Hero[] = [
     {
+        id: "dva",
         name: 'D.Va',
-        role: 'Tank',
+        role: 'TANK',
     },
     {
+        id: "doomfist",
         name: 'Doomfist',
-        role: 'Tank',
+        role: 'TANK',
     },
     {
+        id: "hazard",
         name: 'Hazard',
-        role: 'Tank',
+        role: 'TANK',
     },
     {
+        id: "junker-queen",
         name: 'Junker Queen',
-        role: 'Tank',
+        role: 'TANK',
     },
     {
+        id: "mauga",
         name: 'Mauga',
-        role: 'Tank',
+        role: 'TANK',
     },
     {
+        id: "orisa",
         name: 'Orisa',
-        role: 'Tank',
+        role: 'TANK',
     },
     {
+        id: "ramattra",
         name: 'Ramattra',
-        role: 'Tank',
+        role: 'TANK',
     },
     {
+        id: "reinhardt",
         name: 'Reinhardt',
-        role: 'Tank',
+        role: 'TANK',
     },
     {
+        id: "roadhog",
         name: 'Roadhog',
-        role: 'Tank',
+        role: 'TANK',
     },
     {
+        id: "sigma",
         name: 'Sigma',
-        role: 'Tank',
+        role: 'TANK',
     },
     {
+        id: "winston",
         name: 'Winston',
-        role: 'Tank',
+        role: 'TANK',
     },
     {
+        id: "wrecking-ball",
         name: 'Wrecking Ball',
-        role: 'Tank',
+        role: 'TANK',
     },
     {
+        id: "zarya",
         name: 'Zarya',
-        role: 'Tank',
+        role: 'TANK',
     },
 ]
 
 
-export const getHeroesByRole = (role: Role) => Heroes.filter(hero => hero.role === role);
+export const getHeroesByRole = (role: RoleName) => Heroes.filter(hero => hero.role === role);
