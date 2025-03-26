@@ -28,7 +28,16 @@ const HeroesList = (props: { heroes: Hero[]; role?: Role }) => {
 const HeroItem = (props: { hero: Hero }) => {
   return (
     <A href={`/heroes/${props.hero.id}`} class={style.heroItem}>
-      <div class={style.heroImage}></div>
+      <div class={style.heroImage}>
+        <img
+          loading="lazy"
+          src={`/hero-icons/${props.hero.id}.webp`}
+          alt={props.hero.name}
+          onError={(e) =>
+            ((e.target as HTMLImageElement).style.display = "none")
+          }
+        />
+      </div>
       <div class={style.heroName}>{props.hero.name.toUpperCase()}</div>
     </A>
   );
