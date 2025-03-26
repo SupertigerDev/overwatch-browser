@@ -1,4 +1,51 @@
+
+
 .container {
     display: flex;
-    background-color: red;
+    justify-content: center;
+    gap: 20px;
+    
+    .heroesGrid:first-child {
+        align-items: center;
+    }
+    .heroesGrid:nth-child(2) {
+        justify-content: center;
+
+    }
+    .heroesGrid:last-child {
+        justify-content: flex-end;
+
+    }
+}
+
+.heroesGrid {
+    display: grid;
+    flex: 1;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 6px;
+}
+
+.heroItem {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    width: 100px;
+    height: 130px;
+    background-color: green;
+    .heroImage {
+       flex: 1;
+    }
+    .heroName {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        justify-content: center;
+        height: 30px;
+        color: black;
+        background-color: white;
+        text-align: center;
+        font-weight: bold;
+        
+    }
 }

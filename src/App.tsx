@@ -1,4 +1,3 @@
-import './App.css'
 import HeroesPage from './pages/HeroesPage'
 
 function App() {
