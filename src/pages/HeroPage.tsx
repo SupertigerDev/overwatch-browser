@@ -76,6 +76,7 @@ const CosmeticCategoryItem = (props: {
 
   return (
     <A
+      title={props.cosmetic.name}
       href={`/heroes/${params.heroId}/${props.cosmetic.id}`}
       class={cn(
         style.cosmeticCategoryItem,
