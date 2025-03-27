@@ -3,6 +3,19 @@
   flex-direction: column;
   margin: 20px;
 }
+.heroBgContainer {
+  position: fixed;
+  z-index: -1;
+  display: flex;
+  inset: 0;
+
+  .heroBgImage {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    object-fit: scale-down;
+  }
+}
 .heroName {
   font-size: 40px;
   font-weight: bold;

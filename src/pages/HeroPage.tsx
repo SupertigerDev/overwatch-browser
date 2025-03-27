@@ -5,16 +5,16 @@ import {
   createMemo,
   createSignal,
   For,
-  onMount,
   Show,
 } from "solid-js";
 import { Hero, Heroes } from "../data/Heroes";
 import { Cosmetic, Cosmetics } from "../data/Cosmetics";
 import { cn } from "../utils";
 import { Skin, Tiers } from "../data/skins/Skin";
+
 const HeroPage = () => {
   const navigate = useNavigate();
-  const params = useParams<{ heroId: string; cosmeticId: string }>();
+  const params = useParams<{ heroId: string; cosmeticId?: string; cosmeticItemId?: string; }>();
 
   const hero = createMemo(() =>
     Heroes.find((hero) => hero.id === params.heroId)
@@ -22,6 +22,7 @@ const HeroPage = () => {
   const cosmetic = createMemo(() =>
     Cosmetics.find((cosmetic) => cosmetic.id === params.cosmeticId)
   );
+
 
   createEffect(() => {
     if (!hero()) {
@@ -42,6 +43,10 @@ const HeroPage = () => {
           <Show when={cosmetic() && hero()}>
             <CosmeticGrid cosmetic={cosmetic()!} hero={hero()!} />
           </Show>
+        </div>
+        <div class={style.heroBgContainer}>
+
+      <img class={style.heroBgImage} src={`/overwatch-browser/hero-skins/${hero()?.id}/${params.cosmeticItemId}.webp`} alt="" />
         </div>
       </div>
     </Show>
