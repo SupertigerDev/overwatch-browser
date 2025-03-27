@@ -44,10 +44,11 @@ const HeroPage = () => {
             <CosmeticGrid cosmetic={cosmetic()!} hero={hero()!} />
           </Show>
         </div>
+        <Show when={params.cosmeticItemId}>
         <div class={style.heroBgContainer}>
-
-      <img class={style.heroBgImage} src={`/overwatch-browser/hero-skins/${hero()?.id}/${params.cosmeticItemId}.webp`} alt="" />
+          <img class={style.heroBgImage} src={`/overwatch-browser/hero-skins/${hero()?.id}/${params.cosmeticItemId}.webp`} alt="" />
         </div>
+        </Show>
       </div>
     </Show>
   );
