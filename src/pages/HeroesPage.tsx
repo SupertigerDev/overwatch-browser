@@ -7,6 +7,7 @@ const HeroesPage = () => {
   const tankHeroes = getHeroesByRole("TANK");
   return (
     <div class={style.container}>
+
       <HeroesList heroes={tankHeroes} role={Roles.TANK} />
       <HeroesList heroes={tankHeroes} role={Roles.DAMAGE} />
       <HeroesList heroes={tankHeroes} role={Roles.SUPPORT} />
@@ -31,7 +32,7 @@ const HeroItem = (props: { hero: Hero }) => {
       <div class={style.heroImage}>
         <img
           loading="lazy"
-          src={`/hero-icons/${props.hero.id}.webp`}
+          src={`/overwatch-browser/hero-icons/${props.hero.id}.webp`}
           alt={props.hero.name}
           onError={(e) =>
             ((e.target as HTMLImageElement).style.display = "none")

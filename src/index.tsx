@@ -2,9 +2,11 @@
 import { render } from "solid-js/web";
 import "./index.css";
 import { Route, Router } from "@solidjs/router";
-import HeroesPage from "./pages/HeroesPage";
 import { BoxBackground } from "./BoxBackground";
-import HeroPage from "./pages/HeroPage";
+import { lazy } from "solid-js";
+
+const HeroesPage = lazy(() => import("./pages/HeroesPage"))
+const HeroPage = lazy(() => import("./pages/HeroPage"))
 
 const root = document.getElementById("root");
 
@@ -12,10 +14,10 @@ render(
   () => (
     <>
       <BoxBackground />
-      <Router>
+      <Router base="/overwatch-browser">
         <Route path="/" component={HeroesPage} />
         <Route path="/heroes" component={HeroesPage} />
-        <Route path="/heroes/:id" component={HeroPage} />
+        <Route path={["/heroes/:heroId", "/heroes/:heroId/:cosmeticId", "/heroes/:heroId/:cosmeticId/:cosmeticItemId"]} component={HeroPage} />
       </Router>
     </>
   ),

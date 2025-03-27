@@ -1,15 +1,18 @@
 import { RoleName } from "./Roles";
+import { Skin } from "./skins/Skin";
 
 export interface Hero {
     id: string;
     name: string;
     role: RoleName
+    skins?: () => Promise<Skin[]>
 }
 export const Heroes: Hero[] = [
     {
         id: "dva",
         name: 'D.Va',
         role: 'TANK',
+        skins: async () => (await import("./skins/dva")).skins
     },
     {
         id: "doomfist",

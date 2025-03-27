@@ -1,17 +1,35 @@
 import style from "./HeroPage.module.scss";
 import { A, useNavigate, useParams } from "@solidjs/router";
-import { createEffect, createMemo, For, Show } from "solid-js";
-import { Heroes } from "../data/Heroes";
+import {
+  createEffect,
+  createMemo,
+  createSignal,
+  For,
+  onMount,
+  Show,
+} from "solid-js";
+import { Hero, Heroes } from "../data/Heroes";
 import { Cosmetic, Cosmetics } from "../data/Cosmetics";
+import { cn } from "../utils";
+import { Skin, Tiers } from "../data/skins/Skin";
 const HeroPage = () => {
   const navigate = useNavigate();
-  const params = useParams<{ id: string }>();
+  const params = useParams<{ heroId: string; cosmeticId: string }>();
 
-  const hero = createMemo(() => Heroes.find((hero) => hero.id === params.id));
+  const hero = createMemo(() =>
+    Heroes.find((hero) => hero.id === params.heroId)
+  );
+  const cosmetic = createMemo(() =>
+    Cosmetics.find((cosmetic) => cosmetic.id === params.cosmeticId)
+  );
 
   createEffect(() => {
     if (!hero()) {
       navigate("/", { replace: true });
+      return;
+    }
+    if (!cosmetic() && params.cosmeticId) {
+      navigate(`../`, { replace: true });
     }
   });
 
@@ -19,26 +37,81 @@ const HeroPage = () => {
     <Show when={hero()}>
       <div class={style.container}>
         <div class={style.heroName}>{hero()?.name.toUpperCase()}</div>
-        <CosmeticList />
+        <div class={style.cosmeticContainer}>
+          <CosmeticCategoryList sideBarMode={!!cosmetic()} />
+          <Show when={cosmetic() && hero()}>
+            <CosmeticGrid cosmetic={cosmetic()!} hero={hero()!} />
+          </Show>
+        </div>
       </div>
     </Show>
   );
 };
 
-const CosmeticList = () => {
+const CosmeticCategoryList = (props: { sideBarMode?: boolean }) => {
   return (
-    <div class={style.cosmeticList}>
+    <div class={style.cosmeticCategoryList}>
       <For each={Cosmetics}>
-        {(cosmetic) => <CosmeticItem cosmetic={cosmetic} />}
+        {(cosmetic) => (
+          <CosmeticCategoryItem
+            cosmetic={cosmetic}
+            sideBarMode={props.sideBarMode}
+          />
+        )}
       </For>
     </div>
   );
 };
-const CosmeticItem = (props: { cosmetic: Cosmetic }) => {
+const CosmeticCategoryItem = (props: {
+  cosmetic: Cosmetic;
+  sideBarMode?: boolean;
+}) => {
+  const params = useParams<{ heroId: string; cosmeticId: string }>();
+
   return (
-    <A href={`./${props.cosmetic.id}`} class={style.cosmeticItem}>
+    <A
+      href={`/heroes/${params.heroId}/${props.cosmetic.id}`}
+      class={cn(
+        style.cosmeticCategoryItem,
+        props.sideBarMode ? style.sideBarMode : undefined
+      )}
+    >
       <div class={style.cosmeticImage}></div>
-      <div>{props.cosmetic.name.toUpperCase()}</div>
+      <Show when={!props.sideBarMode}>
+        <div>{props.cosmetic.name.toUpperCase()}</div>
+      </Show>
+    </A>
+  );
+};
+
+const CosmeticGrid = (props: { cosmetic: Cosmetic; hero: Hero }) => {
+  const cosmeticId = () => props.cosmetic.id as "skins";
+  const [items, setItems] = createSignal<Skin[]>([]);
+
+  createEffect(async () => {
+    const items = await props.hero[cosmeticId()]?.();
+    setItems(items || []);
+  });
+
+  return (
+    <div class={style.cosmeticGrid}>
+      <For each={items()}>{(item) => <CosmeticItem item={item} />}</For>
+    </div>
+  );
+};
+const CosmeticItem = (props: { item: Skin }) => {
+  const tier = () => Tiers[props.item.tier];
+  const params = useParams<{ heroId: string; cosmeticId: string;}>();
+
+  return (
+    <A href={`/heroes/${params.heroId}/${params.cosmeticId}/${props.item.id}`} class={style.cosmeticItem}>
+      <img
+        src={`/overwatch-browser/hero-skin-icons/${params.heroId}/${props.item.id}.webp`}
+        alt=""
+      />
+      <div class={style.itemName} style={{ background: tier().color }}>
+        {props.item.name}
+      </div>
     </A>
   );
 };

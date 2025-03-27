@@ -36,7 +36,7 @@ export const Cosmetics: Cosmetic[] = [
     name: "Sprays",
   },
   {
-    id: "weapon-varints",
-    name: "Weapon Varints",
+    id: "weapon-variants",
+    name: "Weapon Variants",
   }
 ]
