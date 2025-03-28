@@ -14,16 +14,19 @@ export const skins: Skin[] = [
   {
     id: "academy",
     tier: "legendary",
-    name: "Academy"
+    name: "Academy",
+    credits: 1500
   },
   {
     id: "cruiser",
     tier: "legendary",
-    name: "Cruiser"
+    name: "Cruiser",
+    credits: 1500
   },
   {
     id: "varsity",
     tier: "legendary",
-    name: "Varsity"
+    name: "Varsity",
+    credits: 1500
   }
 ]

@@ -41,5 +41,7 @@ export type TierName = keyof typeof Tiers
 export interface Skin {
   id: string;
   name: string;
-  tier: TierName
+  tier: TierName;
+  credits?: number;
+  owCoins?: number;
 }

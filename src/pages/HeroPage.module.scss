@@ -82,8 +82,9 @@
     flex-direction: column;
     justify-content: center;
     width: 125px;
-    height: 135px;
+    height: 145px;
     border-radius: 6px;
+    color: white;
     background-color: rgba(255, 255, 255, 0.08);
     transition: 0.1s;
     text-decoration: none;
@@ -98,10 +99,26 @@
       width: 70px;
       border-radius: 6px;
     }
+    .itemInfo {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      gap: 4px;
+    }
     .itemName {
       -webkit-background-clip: text !important;
       font-weight: bold;
       -webkit-text-fill-color: transparent;
+    }
+    .credits {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      img {
+        width: 20px;
+        object-fit: scale-down;
+      }
     }
   }
 }

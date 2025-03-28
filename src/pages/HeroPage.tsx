@@ -1,12 +1,6 @@
 import style from "./HeroPage.module.scss";
 import { A, useNavigate, useParams } from "@solidjs/router";
-import {
-  createEffect,
-  createMemo,
-  createSignal,
-  For,
-  Show,
-} from "solid-js";
+import { createEffect, createMemo, createSignal, For, Show } from "solid-js";
 import { Hero, Heroes } from "../data/Heroes";
 import { Cosmetic, Cosmetics } from "../data/Cosmetics";
 import { cn } from "../utils";
@@ -14,7 +8,11 @@ import { Skin, Tiers } from "../data/skins/Skin";
 
 const HeroPage = () => {
   const navigate = useNavigate();
-  const params = useParams<{ heroId: string; cosmeticId?: string; cosmeticItemId?: string; }>();
+  const params = useParams<{
+    heroId: string;
+    cosmeticId?: string;
+    cosmeticItemId?: string;
+  }>();
 
   const hero = createMemo(() =>
     Heroes.find((hero) => hero.id === params.heroId)
@@ -22,7 +20,6 @@ const HeroPage = () => {
   const cosmetic = createMemo(() =>
     Cosmetics.find((cosmetic) => cosmetic.id === params.cosmeticId)
   );
-
 
   createEffect(() => {
     if (!hero()) {
@@ -45,9 +42,15 @@ const HeroPage = () => {
           </Show>
         </div>
         <Show when={params.cosmeticItemId}>
-        <div class={style.heroBgContainer}>
-          <img class={style.heroBgImage} src={`/overwatch-browser/hero-skins/${hero()?.id}/${params.cosmeticItemId}.webp`} alt="" />
-        </div>
+          <div class={style.heroBgContainer}>
+            <img
+              class={style.heroBgImage}
+              src={`/overwatch-browser/hero-skins/${hero()?.id}/${
+                params.cosmeticItemId
+              }.webp`}
+              alt=""
+            />
+          </div>
         </Show>
       </div>
     </Show>
@@ -108,16 +111,30 @@ const CosmeticGrid = (props: { cosmetic: Cosmetic; hero: Hero }) => {
 };
 const CosmeticItem = (props: { item: Skin }) => {
   const tier = () => Tiers[props.item.tier];
-  const params = useParams<{ heroId: string; cosmeticId: string;}>();
+  const params = useParams<{ heroId: string; cosmeticId: string }>();
 
   return (
-    <A href={`/heroes/${params.heroId}/${params.cosmeticId}/${props.item.id}`} class={style.cosmeticItem}>
+    <A
+      href={`/heroes/${params.heroId}/${params.cosmeticId}/${props.item.id}`}
+      class={style.cosmeticItem}
+    >
       <img
         src={`/overwatch-browser/hero-skin-icons/${params.heroId}/${props.item.id}.webp`}
-        alt=""
       />
-      <div class={style.itemName} style={{ background: tier().color }}>
-        {props.item.name}
+      <div class={style.itemInfo}>
+        <div class={style.itemName} style={{ background: tier().color }}>
+          {props.item.name}
+        </div>
+        <Show when={props.item.credits || props.item.owCoins}>
+          <div class={style.credits}>
+            <img
+              src={`/overwatch-browser/icons/${
+                props.item.credits ? "credits.webp" : "ow-coins.svg"
+              }`}
+            />
+            {props.item.credits}
+          </div>
+        </Show>
       </div>
     </A>
   );
